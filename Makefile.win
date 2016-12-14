@@ -1,14 +1,14 @@
 # Project: Project1
 # Compiler: Default GCC compiler
 # Compiler Type: MingW 3
-# Makefile created by wxDev-C++ IDE 7.4.2.569 on 14-12-16 19:54
+# Makefile created by wxDev-C++ IDE 7.4.2.569 on 14.12.16 20:55
 
 WXLIBNAME = wxmsw29u
 CPP       = g++.exe
 CC        = gcc.exe
 WINDRES   = "windres.exe"
-OBJ       = Objects/MingW/projektApp.o Objects/MingW/projektDlg.o Objects/MingW/utils.o Objects/MingW/effects.o Objects/MingW/projekt_private.res
-LINKOBJ   = "Objects/MingW/projektApp.o" "Objects/MingW/projektDlg.o" "Objects/MingW/utils.o" "Objects/MingW/effects.o" Objects/MingW/projekt_private.res
+OBJ       = Objects/MingW/projektApp.o Objects/MingW/projektDlg.o Objects/MingW/effects.o Objects/MingW/utils.o Objects/MingW/projekt_private.res
+LINKOBJ   = "Objects/MingW/projektApp.o" "Objects/MingW/projektDlg.o" "Objects/MingW/effects.o" "Objects/MingW/utils.o" Objects/MingW/projekt_private.res
 LIBS      = -L"C:/Program Files (x86)/Dev-Cpp/lib/wx/gcc_lib" -L"C:/Program Files (x86)/Dev-Cpp/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib" -mwindows -l$(WXLIBNAME) -l$(WXLIBNAME)_gl -lwxscintilla -lwxtiff -lwxjpeg -lwxpng -lwxzlib -lwxregexu -lwxexpat -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lwinmm -lshell32 -lcomctl32 -lole32 -loleaut32 -luuid -lrpcrt4 -ladvapi32 -lwsock32 -lodbc32 -lopengl32  -g3 
 INCS      = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include"
 CXXINCS   = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/" -I"C:/Program Files (x86)/Dev-Cpp/include/common"
@@ -42,11 +42,11 @@ Objects/MingW/projektApp.o: $(GLOBALDEPS) projektApp.cpp projektApp.h projektDlg
 Objects/MingW/projektDlg.o: $(GLOBALDEPS) projektDlg.cpp projektDlg.h utils.h effects.h projektDlg.h
 	$(CPP) -c projektDlg.cpp -o Objects/MingW/projektDlg.o $(CXXFLAGS)
 
-Objects/MingW/utils.o: $(GLOBALDEPS) utils.cpp utils.h
-	$(CPP) -c utils.cpp -o Objects/MingW/utils.o $(CXXFLAGS)
-
 Objects/MingW/effects.o: $(GLOBALDEPS) effects.cpp effects.h projektDlg.h utils.h
 	$(CPP) -c effects.cpp -o Objects/MingW/effects.o $(CXXFLAGS)
+
+Objects/MingW/utils.o: $(GLOBALDEPS) utils.cpp utils.h
+	$(CPP) -c utils.cpp -o Objects/MingW/utils.o $(CXXFLAGS)
 
 Objects/MingW/projekt_private.res: Objects/MingW/projekt_private.rc projektApp.rc 
 	$(WINDRES) --input-format=rc -o Objects/MingW/projekt_private.res $(RCINCS) Objects/MingW/PROJEK~1.RC -O coff

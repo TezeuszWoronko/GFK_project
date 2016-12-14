@@ -145,9 +145,9 @@ CompilerSet=9
 CompilerType=9
 
 [Unit10]
-FileName=effects.h
+FileName=utils.h
 CompileCpp=1
-Folder=
+Folder=Project1
 Compile=1
 Link=1
 Priority=1000
@@ -155,9 +155,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit7]
-FileName=utils.h
+FileName=effects.cpp
 CompileCpp=1
-Folder=
+Folder=Project1
 Compile=1
 Link=1
 Priority=1000
@@ -165,9 +165,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit8]
-FileName=utils.cpp
+FileName=effects.h
 CompileCpp=1
-Folder=
+Folder=Project1
 Compile=1
 Link=1
 Priority=1000
@@ -175,7 +175,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit9]
-FileName=effects.cpp
+FileName=utils.cpp
 CompileCpp=1
 Folder=Project1
 Compile=1

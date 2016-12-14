@@ -6,7 +6,7 @@ void defaultOperation(wxImage* result, wxImage* image1, wxImage* image2, int i, 
 
 void enterLeft(wxImage* result, wxImage* image1, wxImage* image2, int i, int n) {
     unsigned char r, g, b;
-    float border = ((float)i)/((float)n);
+    float border = ((float)i)/((float)(n-1));
     border*= image1->GetWidth();
     if(border < 0)
         border = 0;

@@ -292,7 +292,7 @@ void projektDlg::OKButtonClick(wxCommandEvent& event)
 {
 	std::string s = (NoOfFrames->GetLineText(0)).ToStdString();
 	if(is_number(s)) {
-        noFrames = atoi(s.c_str()) + 1;
+        noFrames = atoi(s.c_str());
         SaveSeq->Enable(true);
         CurrentFrame->SetScrollbar(0,1,noFrames,1);
         CurrentFrame->Enable(true);
