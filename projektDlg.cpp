@@ -273,6 +273,11 @@ void projektDlg::TYPESelected(wxCommandEvent& event )
             NoOfFrames->Enable(true);
             OKButton->Enable(true);
             break;
+        case 1:
+            process = enterRight;
+            NoOfFrames->Enable(true);
+            OKButton->Enable(true);
+            break;
         default:
             process = NULL;
             NoOfFrames->Enable(false);
@@ -296,7 +301,8 @@ void projektDlg::OKButtonClick(wxCommandEvent& event)
         SaveSeq->Enable(true);
         CurrentFrame->SetScrollbar(0,1,noFrames,1);
         CurrentFrame->Enable(true);
-        
+        wxScrollEvent temp = wxScrollEvent(wxEVT_NULL,0,CurrentFrame->GetThumbPosition());
+        CurrentFrameScroll(temp);
     }
     else {
         wxMessageBox("Niepoprawna iloœæ klatek");
