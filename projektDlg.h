@@ -27,9 +27,9 @@
 //wxDev-C++ designer will remove them. Add custom headers after the block.
 ////Header Include Start
 #include <wx/filedlg.h>
-#include <wx/textctrl.h>
 #include <wx/scrolbar.h>
 #include <wx/panel.h>
+#include <wx/textctrl.h>
 #include <wx/choice.h>
 #include <wx/button.h>
 #include <wx/sizer.h>
@@ -37,6 +37,8 @@
 #include <wx/image.h>
 #include <wx/dcbuffer.h>
 #include "utils.h"
+#include <string>
+#include <cstdlib>
 ////Dialog Style Start
 #undef projektDlg_STYLE
 #define projektDlg_STYLE wxCAPTION | wxSYSTEM_MENU | wxDIALOG_NO_PARENT | wxMINIMIZE_BOX | wxCLOSE_BOX
@@ -57,17 +59,16 @@ class projektDlg : public wxDialog
 		void TYPESelected(wxCommandEvent& event );
 		void OKButtonClick(wxCommandEvent& event);
 		void CurrentFrameScroll(wxScrollEvent& event);
+		void SaveSeqClick(wxCommandEvent& event);
 	
 	private:
 		//Do not add custom control declarations between 
 		//GUI Control Declaration Start and GUI Control Declaration End.
 		//wxDev-C++ will remove them. Add custom code after the block.
 		////GUI Control Declaration Start
-		wxFileDialog *WxSaveFileDialog1;
 		wxFileDialog *WxOpenFileDialog2;
+		wxFileDialog *WxSaveFileDialog1;
 		wxFileDialog *WxOpenFileDialog1;
-		wxButton *OKButton;
-		wxTextCtrl *NoOfFrames;
 		wxScrollBar *CurrentFrame;
 		wxBoxSizer *WxBoxSizer5;
 		wxPanel *Preview;
@@ -75,6 +76,8 @@ class projektDlg : public wxDialog
 		wxBoxSizer *WxBoxSizer3;
 		wxButton *SaveSeq;
 		wxBoxSizer *WxBoxSizer8;
+		wxButton *OKButton;
+		wxTextCtrl *NoOfFrames;
 		wxBoxSizer *WxBoxSizer9;
 		wxChoice *TYPE;
 		wxBoxSizer *WxBoxSizer7;
@@ -93,11 +96,11 @@ class projektDlg : public wxDialog
 		enum
 		{
 			////GUI Enum Control ID Start
-			ID_OKBUTTON = 1019,
-			ID_NOOFFRAMES = 1018,
 			ID_CURRENTFRAME = 1008,
 			ID_PREVIEW = 1009,
 			ID_SAVESEQ = 1015,
+			ID_OKBUTTON = 1019,
+			ID_NOOFFRAMES = 1018,
 			ID_TYPE = 1013,
 			ID_LOADIMAGE2 = 1016,
 			ID_LOADIMAGE1 = 1012,

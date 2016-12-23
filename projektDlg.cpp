@@ -26,11 +26,12 @@ BEGIN_EVENT_TABLE(projektDlg,wxDialog)
 	////Manual Code End
 	
 	EVT_CLOSE(projektDlg::OnClose)
-	EVT_BUTTON(ID_OKBUTTON,projektDlg::OKButtonClick)
 	
 	EVT_COMMAND_SCROLL(ID_CURRENTFRAME,projektDlg::CurrentFrameScroll)
 	
 	EVT_UPDATE_UI(ID_PREVIEW,projektDlg::PreviewUpdateUI)
+	EVT_BUTTON(ID_SAVESEQ,projektDlg::SaveSeqClick)
+	EVT_BUTTON(ID_OKBUTTON,projektDlg::OKButtonClick)
 	EVT_CHOICE(ID_TYPE,projektDlg::TYPESelected)
 	EVT_BUTTON(ID_LOADIMAGE2,projektDlg::LoadImage2Click)
 	EVT_BUTTON(ID_LOADIMAGE1,projektDlg::LoadImage1Click)
@@ -96,6 +97,14 @@ void projektDlg::CreateGUIControls()
 	WxBoxSizer9 = new wxBoxSizer(wxHORIZONTAL);
 	WxBoxSizer2->Add(WxBoxSizer9, 0, wxALIGN_CENTER | wxALL, 5);
 
+	NoOfFrames = new wxTextCtrl(this, ID_NOOFFRAMES, _("Podaj liczbê klatek"), wxPoint(5, 8), wxSize(121, 19), 0, wxDefaultValidator, _("NoOfFrames"));
+	NoOfFrames->Enable(false);
+	WxBoxSizer9->Add(NoOfFrames, 0, wxALIGN_CENTER | wxALL, 5);
+
+	OKButton = new wxButton(this, ID_OKBUTTON, _("OK"), wxPoint(136, 5), wxSize(75, 25), 0, wxDefaultValidator, _("OKButton"));
+	OKButton->Enable(false);
+	WxBoxSizer9->Add(OKButton, 0, wxALIGN_CENTER | wxALL, 5);
+
 	WxBoxSizer8 = new wxBoxSizer(wxHORIZONTAL);
 	WxBoxSizer2->Add(WxBoxSizer8, 0, wxALIGN_CENTER | wxALL, 5);
 
@@ -119,19 +128,11 @@ void projektDlg::CreateGUIControls()
 	CurrentFrame->Enable(false);
 	WxBoxSizer5->Add(CurrentFrame, 0, wxALIGN_BOTTOM | wxALIGN_CENTER | wxALL, 5);
 
-	NoOfFrames = new wxTextCtrl(this, ID_NOOFFRAMES, _("Podaj liczbê klatek"), wxPoint(5, 8), wxSize(121, 19), 0, wxDefaultValidator, _("NoOfFrames"));
-	NoOfFrames->Enable(false);
-	WxBoxSizer9->Add(NoOfFrames, 0, wxALIGN_CENTER | wxALL, 5);
-
-	OKButton = new wxButton(this, ID_OKBUTTON, _("OK"), wxPoint(136, 5), wxSize(75, 25), 0, wxDefaultValidator, _("OKButton"));
-	OKButton->Enable(false);
-	WxBoxSizer9->Add(OKButton, 0, wxALIGN_CENTER | wxALL, 5);
-
 	WxOpenFileDialog1 =  new wxFileDialog(this, _("Choose a file"), _(""), _(""), _("*.jpg"), wxFD_OPEN);
 
-	WxOpenFileDialog2 =  new wxFileDialog(this, _("Choose a file"), _(""), _(""), _("*.jpg"), wxFD_OPEN);
+	WxSaveFileDialog1 =  new wxFileDialog(this, _("Choose a file"), _(""), _(""), _("*.jpg"), wxFD_SAVE);
 
-	WxSaveFileDialog1 =  new wxFileDialog(this, _("Choose a file"), _(""), _(""), _("*.*"), wxFD_SAVE);
+	WxOpenFileDialog2 =  new wxFileDialog(this, _("Choose a file"), _(""), _(""), _("*.jpg"), wxFD_OPEN);
 
 	SetTitle(_("projekt"));
 	SetIcon(wxNullIcon);
@@ -143,12 +144,13 @@ void projektDlg::CreateGUIControls()
 	
 	////GUI Items Creation End
 	wxInitAllImageHandlers();	
-
+    return;
 }
 
 void projektDlg::OnClose(wxCloseEvent& /*event*/)
 {
 	Destroy();
+	return;
 }
 
 /*
@@ -309,7 +311,7 @@ void projektDlg::OKButtonClick(wxCommandEvent& event)
         SaveSeq->Enable(false);
         CurrentFrame->Enable(false);
     }
-	
+	return;
 }
 
 /*
@@ -325,4 +327,34 @@ void projektDlg::CurrentFrameScroll(wxScrollEvent& event)
             process(result,image1,image2,CurrentFrame->GetThumbPosition(),noFrames);
         }    
     }
+    return;
+}
+
+/*
+ * SaveSeqClick
+ */
+void projektDlg::SaveSeqClick(wxCommandEvent& event)
+{
+	if(WxSaveFileDialog1->ShowModal() == wxID_CANCEL)
+	   return;
+	else {
+        if(CurrentFrame->IsEnabled()) {
+            char buff[16];
+            for(int i = 0; i < noFrames; i++) {
+                if(result)
+                    delete result;
+                result = new wxImage(image1->GetWidth(),image1->GetHeight());
+                process(result,image1,image2,i,noFrames); 
+                wxString path = WxSaveFileDialog1->GetPath();
+                path = path.SubString(0,path.Length()-5);
+                result->SaveFile(path + wxString(itoa(i,buff,10)) + wxString(".jpg"),wxBITMAP_TYPE_JPEG);
+            }
+            wxScrollEvent temp = wxScrollEvent(wxEVT_NULL,0,CurrentFrame->GetThumbPosition());
+            CurrentFrameScroll(temp);
+        }
+        else {
+            wxMessageBox("B³¹d");
+        }
+    }
+    return;
 }
