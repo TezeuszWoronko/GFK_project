@@ -167,14 +167,14 @@ void projektDlg::LoadImage1Click(wxCommandEvent& event)
         if(image1 && image2) {
             if(image1->IsOk() && image2->IsOk()) {
                 int w, h;
-                if(image1->GetWidth() > image2->GetWidth())
+                if(image1->GetWidth()*image1->GetHeight() > image2->GetWidth()*image2->GetHeight()) {
                     w = image1->GetWidth();
-                else
-                    w = image2->GetWidth();
-                if(image1->GetHeight() > image2->GetHeight())
                     h = image1->GetHeight();
-                else
+                }
+                else {
+                    w = image2->GetWidth();
                     h = image2->GetHeight();
+                }
                 image1->Rescale(w,h);
                 image2->Rescale(w,h);
                 TYPE->Enable(true);
@@ -212,14 +212,14 @@ void projektDlg::LoadImage2Click(wxCommandEvent& event)
         if(image1 && image2) {
             if(image1->IsOk() && image2->IsOk()) {
                 int w, h;
-                if(image1->GetWidth() > image2->GetWidth())
+                if(image1->GetWidth()*image1->GetHeight() > image2->GetWidth()*image2->GetHeight()) {
                     w = image1->GetWidth();
-                else
-                    w = image2->GetWidth();
-                if(image1->GetHeight() > image2->GetHeight())
                     h = image1->GetHeight();
-                else
+                }
+                else {
+                    w = image2->GetWidth();
                     h = image2->GetHeight();
+                }
                 image1->Rescale(w,h);
                 image2->Rescale(w,h);
                 TYPE->Enable(true);
