@@ -280,6 +280,16 @@ void projektDlg::TYPESelected(wxCommandEvent& event )
             NoOfFrames->Enable(true);
             OKButton->Enable(true);
             break;
+        case 2:
+            process = enterUp;
+            NoOfFrames->Enable(true);
+            OKButton->Enable(true);
+            break;
+        case 3:
+            process = enterDown;
+            NoOfFrames->Enable(true);
+            OKButton->Enable(true);
+            break;
         default:
             process = NULL;
             NoOfFrames->Enable(false);
@@ -340,17 +350,16 @@ void projektDlg::SaveSeqClick(wxCommandEvent& event)
 	else {
         if(CurrentFrame->IsEnabled()) {
             char buff[16];
+            wxImage* toSave = NULL;
             for(int i = 0; i < noFrames; i++) {
-                if(result)
-                    delete result;
-                result = new wxImage(image1->GetWidth(),image1->GetHeight());
-                process(result,image1,image2,i,noFrames); 
+                if(toSave)
+                    delete toSave;
+                toSave = new wxImage(image1->GetWidth(),image1->GetHeight());
+                process(toSave,image1,image2,i,noFrames); 
                 wxString path = WxSaveFileDialog1->GetPath();
                 path = path.SubString(0,path.Length()-5);
-                result->SaveFile(path + wxString(itoa(i,buff,10)) + wxString(".jpg"),wxBITMAP_TYPE_JPEG);
+                toSave->SaveFile(path + wxString(itoa(i+1,buff,10)) + wxString(".jpg"),wxBITMAP_TYPE_JPEG);
             }
-            wxScrollEvent temp = wxScrollEvent(wxEVT_NULL,0,CurrentFrame->GetThumbPosition());
-            CurrentFrameScroll(temp);
         }
         else {
             wxMessageBox("B³¹d");
