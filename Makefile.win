@@ -1,7 +1,7 @@
 # Project: Project1
 # Compiler: Default GCC compiler
 # Compiler Type: MingW 3
-# Makefile created by wxDev-C++ IDE 7.4.2.569 on 23.12.16 12:26
+# Makefile created by wxDev-C++ IDE 7.4.2.569 on 26.12.16 15:25
 
 WXLIBNAME = wxmsw29u
 CPP       = g++.exe
@@ -9,14 +9,14 @@ CC        = gcc.exe
 WINDRES   = "windres.exe"
 OBJ       = Objects/MingW/projektApp.o Objects/MingW/projektDlg.o Objects/MingW/effects.o Objects/MingW/utils.o Objects/MingW/projekt_private.res
 LINKOBJ   = "Objects/MingW/projektApp.o" "Objects/MingW/projektDlg.o" "Objects/MingW/effects.o" "Objects/MingW/utils.o" Objects/MingW/projekt_private.res
-LIBS      = -L"C:/Program Files (x86)/Dev-Cpp/lib/wx/gcc_lib" -L"C:/Program Files (x86)/Dev-Cpp/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib" -mwindows -l$(WXLIBNAME) -l$(WXLIBNAME)_gl -lwxscintilla -lwxtiff -lwxjpeg -lwxpng -lwxzlib -lwxregexu -lwxexpat -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lwinmm -lshell32 -lcomctl32 -lole32 -loleaut32 -luuid -lrpcrt4 -ladvapi32 -lwsock32 -lodbc32 -lopengl32  -g3 
+LIBS      = -L"C:/Program Files (x86)/Dev-Cpp/lib/wx/gcc_lib" -L"C:/Program Files (x86)/Dev-Cpp/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib" -mwindows -l$(WXLIBNAME) -l$(WXLIBNAME)_gl -lwxscintilla -lwxtiff -lwxjpeg -lwxpng -lwxzlib -lwxregexu -lwxexpat -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lwinmm -lshell32 -lcomctl32 -lole32 -loleaut32 -luuid -lrpcrt4 -ladvapi32 -lwsock32 -lodbc32 -lopengl32 -fopenmp -lpthread  -g3 
 INCS      = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include"
 CXXINCS   = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/" -I"C:/Program Files (x86)/Dev-Cpp/include/common"
 RCINCS    = --include-dir "C:/PROGRA~2/Dev-Cpp/include/common"
 BIN       = Output/MingW/projekt.exe
 DEFINES   = -D__WXMSW__ -D__GNUWIN32__ -D_UNICODE
-CXXFLAGS  = $(CXXINCS) $(DEFINES)   -g3
-CFLAGS    = $(INCS) $(DEFINES)   -g3
+CXXFLAGS  = $(CXXINCS) $(DEFINES) -fopenmp -lpthread    -fexpensive-optimizations -O3 -g3
+CFLAGS    = $(INCS) $(DEFINES) -fopenmp -lpthread    -fexpensive-optimizations -O3 -g3
 GPROF     = gprof.exe
 ifeq ($(OS),Windows_NT)
    RM = del /Q
