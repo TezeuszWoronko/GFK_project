@@ -291,6 +291,21 @@ void projektDlg::TYPESelected(wxCommandEvent& event )
             NoOfFrames->Enable(true);
             OKButton->Enable(true);
             break;
+        case 4:
+            process = enterBox;
+            NoOfFrames->Enable(true);
+            OKButton->Enable(true);
+            break;
+        case 5:
+            process = exitBox;
+            NoOfFrames->Enable(true);
+            OKButton->Enable(true);
+            break;
+        case 6:
+            process = darkening;
+            NoOfFrames->Enable(true);
+            OKButton->Enable(true);
+            break;
         case 7:
             process = transition;  
             NoOfFrames->Enable(true);
@@ -306,6 +321,11 @@ void projektDlg::TYPESelected(wxCommandEvent& event )
             NoOfFrames->Enable(true);
             OKButton->Enable(true);
             break;
+        case 10:
+            process = enterWindow;
+            NoOfFrames->Enable(true);
+            OKButton->Enable(true);
+            break;    
         default:
             process = NULL;
             NoOfFrames->Enable(false);

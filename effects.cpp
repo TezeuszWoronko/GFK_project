@@ -197,4 +197,230 @@ void verticalFlip(wxImage* result, wxImage* image1, wxImage* image2, int i, int 
 }
 
 
+int normRGB(int value){
+    if(value<0)
+            return 0;
+    else if(value>255)
+            return 255;
+    else 
+        return value;
+}
+
+void darkening(wxImage* result, wxImage* image1, wxImage* image2, int i, int n) {
+    unsigned char r, g, b;
+    float val = (((float)i)/((float)n)) * 255 * 2;
+    float step = 1 / ((float) n) * 255 * 2;
+    unsigned x, y; 
+    
+    for(x = 0; x < image1->GetWidth(); x++) {
+        for(y = 0; y < image1->GetHeight(); y++) {
+            if(val < 255){
+                r = normRGB(image1->GetRed(x,y) - val);
+                g = normRGB(image1->GetGreen(x,y) - val);
+                b = normRGB(image1->GetBlue(x,y) - val);
+            } else {
+                float v2 = 255 - fmod(val, 255) - step;
+                r = normRGB(image2->GetRed(x,y)-v2);
+                g = normRGB(image2->GetGreen(x,y)-v2);
+                b = normRGB(image2->GetBlue(x,y)-v2);
+            }
+            result->SetRGB(x,y,r,g,b);
+        }    
+    }    
+    return;
+}
+
+void enterBox(wxImage* result, wxImage* image1, wxImage* image2, int i, int n){
+
+    unsigned char r, g, b;
+    float border = (((float)i)/((float)n)) + ( 1 / (float)n );
+    
+    int w1 = image1->GetWidth();
+    int h1 = image1->GetHeight();    
+    int w2 = border * image1->GetWidth();
+    int h2 = border * image1->GetHeight();
+    
+    float x_ratio = w1/(float)w2 ;
+    float y_ratio = h1/(float)h2 ;
+    float px, py; 
+    
+    float x_start = w1/2 - w2/2;
+    float y_start = h1/2 - h2/2;    
+    
+    unsigned x, y; 
+
+    for(x= 0; x< w1; x++) {
+        for(y = 0; y < h1; y++) {
+            int r, g, b;
+            r = image1->GetRed(x,y);
+            g = image1->GetGreen(x,y);
+            b = image1->GetBlue(x,y);
+            
+            if( x>= x_start && 
+                x< x_start + w2 &&
+                y >= y_start &&
+                y < y_start + h2 ) {
+                
+                float small_x= x- x_start;
+                float small_y = y - y_start;
+                
+                px = small_x*x_ratio ;
+                py = small_y*y_ratio ;
+                
+                r = image2->GetRed(px, py);
+                g = image2->GetGreen(px, py);
+                b = image2->GetBlue(px, py);
+                
+            }
+            
+            result->SetRGB(x, y, r, g, b);
+        }
+    }
+ 
+    return;
+}
+
+void exitBox(wxImage* result, wxImage* image1, wxImage* image2, int i, int n){
+    unsigned char r, g, b;
+    float border = 1 - (((float)i)/((float)n));
+    
+    int w1 = image1->GetWidth();
+    int h1 = image1->GetHeight();    
+    int w2 = border * image1->GetWidth();
+    int h2 = border * image1->GetHeight();
+    
+    float x_ratio = w1/(double)w2 ;
+    float y_ratio = h1/(double)h2 ;
+    float px, py; 
+
+    float x_start = w1/2 - w2/2;
+    float y_start = h1/2 - h2/2;    
+    
+    unsigned x, y; 
+
+    for(x = 0; x < w1; x++) {
+        for(y = 0; y < h1; y++) {
+            int r, g, b;
+            r = image1->GetRed(x,y);
+            g = image1->GetGreen(x,y);
+            b = image1->GetBlue(x,y);
+            if( x >= x_start && 
+                x < x_start + w2 &&
+                y >= y_start &&
+                y < y_start + h2 ) {
+                
+                float small_x = x - x_start;
+                float small_y = y - y_start;
+                
+                px = small_x*x_ratio ;
+                py = small_y*y_ratio ;
+                
+                r = image2->GetRed(px, py);
+                g = image2->GetGreen(px, py);
+                b = image2->GetBlue(px, py);
+            }
+            result->SetRGB(x, y, r, g, b);
+
+        }
+    }
+    
+    return;
+}
+
+void enterWindow(wxImage* result, wxImage* image1, wxImage* image2, int d, int n){
+    unsigned char r, g, b;
+    float border = 1 - ((2*(float)d)/((float)n-1));
+    float bord = d;
+    
+    int w1 = image1->GetWidth();
+    int h1 = image1->GetHeight();    
+    int w2 = border * image1->GetWidth();
+    int h2 = h1;
+
+    float x_start = w1 - w2;
+    float y_start = 0;  
+    
+    float x_ratio = w1/(float)w2 ;
+    float y_ratio = h1/(float)h2 ;
+    int px, py; 
+    
+    if(bord < n/2){
+        unsigned i, j; 
+
+        for (i=0; i<h1; i++) {
+            for (j=0; j<w2; j++) {
+                float skok;
+                skok = (1-(float)j / (float)w2) * 2 * bord * (h1/(float)n);
+    
+                int r,g,b;
+                h2 = (h1 - skok);
+                y_ratio = (float)h1 / (float)h2;
+                px = floor(j * x_ratio); 
+                py = floor((i - (skok/2)) * y_ratio);
+                if(px >= 0 && px < w1 && py >= 0 && py < h1){
+                    r = image1->GetRed(px, py);
+                    g = image1->GetGreen(px, py);
+                    b = image1->GetBlue(px, py);
+                } else {
+                    r = g = b = 0;    
+                }
+    
+                if(j+x_start >= 0 && j+x_start < w1 && i+y_start >= 0 && i+y_start < h1){
+                    result->SetRGB(j+x_start, i+y_start, r, g, b) ;
+                }
+            }
+        }  
+    }
+    
+    float border2 ;
+    float b2;
+
+    if( n%2 == 0 ){
+        d = d+1;
+        b2 = d - n/2;
+        border2 = ((2*(float)b2)/((float)n));
+    } else {
+        b2 = d - n/2;
+        border2 = ((2*(float)b2)/((float)n-1));
+    }
+    
+    x_start = 0;
+    w2 = border2 * image1->GetWidth();
+    x_ratio = w1/(float)w2 ;
+    
+    
+    
+    if(d >= n/2){
+        unsigned i, j; 
+
+        for (i=0; i<h1; i++) {
+            for (j=0; j<w2; j++) {
+                float skok;
+                skok = ((float)j / (float)w2) * 2 * (n/2-b2) * (h1/(float)n);
+                int r,g,b;
+                h2 = (h1 - skok);
+                y_ratio = (float)h1 / (float)h2;
+                px = floor(j * x_ratio); 
+                py = floor((i - (skok/2)) * y_ratio);
+                if(px >= 0 && px < w1 && py >= 0 && py < h1){
+                    r = image2->GetRed(px, py);
+                    g = image2->GetGreen(px, py);
+                    b = image2->GetBlue(px, py);
+                } else {
+                    r = g = b = 0;    
+                }
+    
+                if(j+x_start >= 0 && j+x_start < w1 && i+y_start >= 0 && i+y_start < h1){
+                    result->SetRGB(j+x_start, i+y_start, r, g, b) ;
+                }
+            }
+        }
+    }
+    return;
+}
+
+
+
+
+
 
