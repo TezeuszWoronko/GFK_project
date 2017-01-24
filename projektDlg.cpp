@@ -87,7 +87,8 @@ void projektDlg::CreateGUIControls()
 	arrayStringFor_TYPE.Add(_("Boks wychodz¹cy"));
 	arrayStringFor_TYPE.Add(_("Œciemnianie"));
 	arrayStringFor_TYPE.Add(_("Przejœcie"));
-	arrayStringFor_TYPE.Add(_("Obrót"));
+	arrayStringFor_TYPE.Add(_("Obrót poziomy"));
+	arrayStringFor_TYPE.Add(_("Obrót pionowy"));
 	arrayStringFor_TYPE.Add(_("Wejœcie"));
 	TYPE = new wxChoice(this, ID_TYPE, wxPoint(5, 5), wxSize(200, 23), arrayStringFor_TYPE, 0, wxDefaultValidator, _("TYPE"));
 	TYPE->Enable(false);
@@ -287,6 +288,21 @@ void projektDlg::TYPESelected(wxCommandEvent& event )
             break;
         case 3:
             process = enterDown;
+            NoOfFrames->Enable(true);
+            OKButton->Enable(true);
+            break;
+        case 7:
+            process = transition;  
+            NoOfFrames->Enable(true);
+            OKButton->Enable(true);
+            break;
+        case 8:
+            process = horizontalFlip;  
+            NoOfFrames->Enable(true);
+            OKButton->Enable(true);
+            break;
+        case 9:
+            process = verticalFlip;  
             NoOfFrames->Enable(true);
             OKButton->Enable(true);
             break;
