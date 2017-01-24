@@ -301,9 +301,9 @@ void exitBox(wxImage* result, wxImage* image1, wxImage* image2, int i, int n){
     for(x = 0; x < w1; x++) {
         for(y = 0; y < h1; y++) {
             int r, g, b;
-            r = image1->GetRed(x,y);
-            g = image1->GetGreen(x,y);
-            b = image1->GetBlue(x,y);
+            r = image2->GetRed(x,y);
+            g = image2->GetGreen(x,y);
+            b = image2->GetBlue(x,y);
             if( x >= x_start && 
                 x < x_start + w2 &&
                 y >= y_start &&
@@ -315,9 +315,9 @@ void exitBox(wxImage* result, wxImage* image1, wxImage* image2, int i, int n){
                 px = small_x*x_ratio ;
                 py = small_y*y_ratio ;
                 
-                r = image2->GetRed(px, py);
-                g = image2->GetGreen(px, py);
-                b = image2->GetBlue(px, py);
+                r = image1->GetRed(px, py);
+                g = image1->GetGreen(px, py);
+                b = image1->GetBlue(px, py);
             }
             result->SetRGB(x, y, r, g, b);
 
