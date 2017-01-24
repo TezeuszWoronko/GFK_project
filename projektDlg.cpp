@@ -332,6 +332,7 @@ void projektDlg::TYPESelected(wxCommandEvent& event )
             OKButton->Enable(false);
             SaveSeq->Enable(false);
             CurrentFrame->Enable(false);
+            break;
     }
     return;
 }
