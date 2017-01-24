@@ -109,9 +109,9 @@ void transition(wxImage* result, wxImage* image1, wxImage* image2, int i, int n)
     float alpha = ((float)i)/((float)(n-1));
     unsigned x, y; 
     #pragma omp parallel for private(y)
-    for(x = 0; x < image1->GetWidth(); x++) {
-        for(y = 0; y < image1->GetHeight(); y++) {
-            result->SetRGB(x, y, alpha*(image1->GetRed(x,y)) + (1-alpha)*(image2->GetRed(x,y)), alpha*(image1->GetGreen(x,y)) + (1-alpha)*(image2->GetGreen(x,y)), alpha*(image1->GetBlue(x,y)) + (1-alpha)*(image2->GetBlue(x,y)));
+    for(x = 0; x < image2->GetWidth(); x++) {
+        for(y = 0; y < image2->GetHeight(); y++) {
+            result->SetRGB(x, y, alpha*(image2->GetRed(x,y)) + (1-alpha)*(image1->GetRed(x,y)), alpha*(image2->GetGreen(x,y)) + (1-alpha)*(image1->GetGreen(x,y)), alpha*(image2->GetBlue(x,y)) + (1-alpha)*(image1->GetBlue(x,y)));
         }
     }
     return;
