@@ -345,16 +345,25 @@ void projektDlg::TYPESelected(wxCommandEvent& event )
 void projektDlg::OKButtonClick(wxCommandEvent& event)
 {
 	std::string s = (NoOfFrames->GetLineText(0)).ToStdString();
+	unsigned int temp;
 	if(is_number(s)) {
-        noFrames = atoi(s.c_str());
-        SaveSeq->Enable(true);
-        CurrentFrame->SetScrollbar(0,1,noFrames,1);
-        CurrentFrame->Enable(true);
-        wxScrollEvent temp = wxScrollEvent(wxEVT_NULL,0,CurrentFrame->GetThumbPosition());
-        CurrentFrameScroll(temp);
+        temp = atoi(s.c_str());
+        if(temp > 1 && temp <= 100) {
+            noFrames = temp;
+            SaveSeq->Enable(true);
+            CurrentFrame->SetScrollbar(0,1,noFrames,1);
+            CurrentFrame->Enable(true);
+            wxScrollEvent temp = wxScrollEvent(wxEVT_NULL,0,CurrentFrame->GetThumbPosition());
+            CurrentFrameScroll(temp);
+        }
+        else {
+            wxMessageBox("Niepoprawna iloœæ klatek.\nPodaj liczbe od 2 do 100.");
+            SaveSeq->Enable(false);
+            CurrentFrame->Enable(false);
+        }
     }
     else {
-        wxMessageBox("Niepoprawna iloœæ klatek");
+        wxMessageBox("Niepoprawna iloœæ klatek.\nPodaj liczbe od 2 do 100.");
         SaveSeq->Enable(false);
         CurrentFrame->Enable(false);
     }
